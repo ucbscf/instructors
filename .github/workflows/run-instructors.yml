@@ -1,0 +1,44 @@
+name: run instructors.sh
+
+# on:
+#   push:
+#     branches: [ master ]
+#  pull_request:
+#    branches: [ master ]
+
+# https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#onschedule
+on:
+  schedule:
+    # run every Monday at 3:29a
+    #- cron: '29 3 * * 1'
+    - cron: '0 17 * * 2'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: set up python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.7'
+
+    - name: install python dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: install git-crypt
+      run: sudo apt-get install -y git-crypt
+
+    - name: unlock our secrets
+      env: GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+      run: |
+        echo "${GIT_CRYPT_KEY}" | base64 -d > ~/.key
+        git crypt unlock ~/.key
+        rm -f ~/.key
+
+    - name: run instructors.sh
+      run: bash instructors.sh

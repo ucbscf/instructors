@@ -34,7 +34,8 @@ jobs:
       run: sudo apt-get install -y git-crypt
 
     - name: unlock our secrets
-      env: GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+      env:
+        GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
       run: |
         echo "${GIT_CRYPT_KEY}" | base64 -d > ~/.key
         git crypt unlock ~/.key

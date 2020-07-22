@@ -10,8 +10,9 @@ name: run instructors.sh
 on:
   schedule:
     # run every Monday at 3:29a
-    #- cron: '29 3 * * 1'
-    - cron: '0 17 * * 2'
+    - cron: '29 3 * * 1'
+  workflow_dispatch:
+    inputs: {}
 
 jobs:
   build:

@@ -1,2 +1,2 @@
 git+https://github.com/ryanlovett/grouper-cli.git@d8180f7
-git+https://github.com/ryanlovett/sis-cli.git@f67b229
+git+https://github.com/ryanlovett/sis-cli.git@678b56f
